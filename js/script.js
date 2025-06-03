@@ -16,13 +16,51 @@ form.addEventListener('submit', (e)=>{  //IMPORTANTE COLOCAR O 'e'
 
 
 
-const errorMessage = (message) => {
-  console.log(message);
+const errorMessage = (input, message) => {
+  const formControl = input.parentElement;  //pelo input agora está pegando o pai
+  
+  const span = formControl.querySelector('span');
+
+  formControl.className = 'form-control error';
+  span.innerText = message;
 }
-const sucessMessage = (message) => {
+
+const successMessage = (input) => {
+  
+  const formControl = input.parentElement;
+  formControl.className = 'form-control success';
 
 }
 
+const successSubmit = () => {
+  let form_control = document.getElementsByClassName('form-control');
+
+// sabemos que tem um array, agora precisamos contar quantos tem lá dentro
+  let count = form_control.length - 1;
+  let soma = 0;
+
+  for (let i = 0; i < form_control.length; i++){
+
+    if (form_control[i].className === 'form-control success'){
+
+      soma = 0 + i;
+      sendData(count, soma);
+    }
+  }  
+  console.log(count, soma);
+}
+
+
+
+function sendData(count, soma){
+  if (count === soma){
+    console.log('dados enviados com sucesso');
+  }
+}
+
+
+
+// FUNÇÃO
 
 function validarDadosDeEntrada(){
 //  console.log('executando o callback')
@@ -34,7 +72,7 @@ function validarDadosDeEntrada(){
     errorMessage(nome, "O nome do usuário deve ser informado");
   }
   else {
-    sucessMessage();
+    successMessage(nome);
   }
 ///////////////////////////////////////////////////
   if (email.value.trim() === ''){
@@ -42,7 +80,7 @@ function validarDadosDeEntrada(){
     errorMessage(email, "O e-mail é obrigatório");
   }  
   else {
-    sucessMessage();
+    successMessage(email);
   }
 ///////////////////////////////////////////////////
   if (senha.value.trim() === ''){
@@ -50,7 +88,7 @@ function validarDadosDeEntrada(){
     errorMessage(senha, 'A senha deve ser informada');
   }
   else {
-    sucessMessage();
+    successMessage(senha);
   } 
 ///////////////////////////////////////////////////
   if (confirmeSenha.value.trim() === ''){
@@ -58,7 +96,7 @@ function validarDadosDeEntrada(){
     errorMessage(confirmeSenha, 'Digite novamente a senha');
   }
   else {
-    sucessMessage();
+    successMessage(confirmeSenha);
   }
 ///////////////////////////////////////////////////
   if (telefone.value.trim() === ''){
@@ -66,7 +104,7 @@ function validarDadosDeEntrada(){
     errorMessage(telefone, 'Digite o telefone');
   }
   else {
-    sucessMessage();
+    successMessage(telefone);
   }
 ///////////////////////////////////////////////////
   if (data.value.trim() === ''){
@@ -74,6 +112,10 @@ function validarDadosDeEntrada(){
     errorMessage(data, 'A data deve ser informada');
   }
   else {
-    sucessMessage();
+    successMessage(data);
   }
+
+
+
+  successSubmit()
 };
